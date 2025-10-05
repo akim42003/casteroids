@@ -23,7 +23,14 @@ int main(void)
 
     while (!WindowShouldClose()) {
         ClearBackground(BLACK);
-        Vector2 triangle_pos = GetMousePosition();
+        triangle_pos = GetMousePosition();
+
+        triangleV1.x = triangle_pos.x + 15;
+        triangleV1.y = triangle_pos.y - 30;
+        triangleV2 = triangle_pos;
+        triangleV3.x = triangle_pos.x + 30;
+        triangleV3.y = triangle_pos.y;
+
         BeginDrawing();
             DrawTriangle(triangleV1, triangleV2, triangleV3, WHITE);
         EndDrawing();
