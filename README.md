@@ -3,4 +3,4 @@
 lib \
   |raylib.h \
   |raymath.h \
-  |librarylib.a \
+  |librarylib.a
