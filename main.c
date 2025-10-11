@@ -33,21 +33,20 @@ int main(void)
         static bool    firstFrame = true;
         static float   angle = -PI/2.0f; // default: pointing "up"
 
-        // --- per-frame update ---
         Vector2 mouse = GetMousePosition();
 
-        // Initialize on first frame (or when you grab the triangle)
+        // Initialize on first frame
         if (firstFrame || IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             prevMouse = mouse;
             firstFrame = false;
         }
 
-        // Direction = mouse velocity (prev -> current)
+        // Direction = mouse velocity
         Vector2 delta = Vector2Subtract(mouse, prevMouse);
         float speed2 = delta.x*delta.x + delta.y*delta.y;
 
         // Update facing only if mouse moved a bit
-        if (speed2 > 0.0001f) {
+        if (speed2 > 0.1f) {
             angle = atan2f(delta.y, delta.x);
         }
 
@@ -59,7 +58,6 @@ int main(void)
         Vector2 baseR = (Vector2){  halfBase,  height };
 
         // Rotate so the triangle faces movement direction
-        // (subtract PI/2 because our "up" reference is +Y)
         Vector2 rotL = Vector2Rotate(baseL, angle + PI/2.0f);
         Vector2 rotR = Vector2Rotate(baseR, angle + PI/2.0f);
 
@@ -70,7 +68,6 @@ int main(void)
 
         // Prepare for next frame
         prevMouse = mouse;
-
 
         BeginDrawing();
             DrawTriangle(triangleV1, triangleV2, triangleV3, WHITE);
