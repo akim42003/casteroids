@@ -3,3 +3,7 @@ lib/
 game
 
 main.o
+
+game
+
+ship.o
