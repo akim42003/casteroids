@@ -7,3 +7,7 @@ main.o
 game
 
 ship.o
+
+asteroid.o
+
+
