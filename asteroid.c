@@ -12,13 +12,22 @@ void init_asteroid(Asteroid *a, Vector2 position) {
 
   a->rotation = 0;
   a->rotationSpeed = ((float)rand() / RAND_MAX - 0.5f) * 0.8f;
-  a->scale = 40.0f;
+  // Random scale for variety (small, medium, large)
+  float r = (float)rand() / RAND_MAX;
+  if (r < 0.33f) {
+    a->scale = 0.3f; // small
+  } else if (r < 0.66f) {
+    a->scale = 0.6f; // medium
+  } else {
+    a->scale = 1.0f; // large
+  }
   a->alive = true;
 
   a->pointCount = 10;
+  float baseRadius = 40.0f; // Base asteroid radius
   for (int i = 0; i < a->pointCount; i++) {
     float angle = ((float)i / a->pointCount) * 2 * PI;
-    float radius = a->scale * (0.7f + (float)rand() / RAND_MAX * 0.6f);
+    float radius = a->scale * baseRadius * (0.7f + (float)rand() / RAND_MAX * 0.6f);
     a->points[i] = (Vector2){cosf(angle) * radius, sinf(angle) * radius};
   }
 };
@@ -33,7 +42,7 @@ void update_asteroid(Asteroid *a, float dt) {
   a->rotation += a->rotationSpeed * dt;
   int w = GetScreenWidth();
   int h = GetScreenHeight();
-  float r = a->scale;
+  float r = a->scale * 40.0f; // Use actual radius for wrapping
 
   // wrap around screen
   if (a->pos.x < -r)
