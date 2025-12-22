@@ -10,7 +10,7 @@ LDLIBS   = -lraylib \
 
 # ==== Targets ====
 TARGET = game
-SRC    = main.c ship.c asteroid.c
+SRC    = main.c ship.c bullet.c asteroid.c
 OBJ    = $(SRC:.c=.o)
 
 # ==== Rules ====

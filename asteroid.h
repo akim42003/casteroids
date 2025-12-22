@@ -16,7 +16,10 @@ typedef struct {
 } Asteroid;
 
 void init_asteroid(Asteroid *a, Vector2 position);
+void init_asteroids(Asteroid *asteroids, int max, int screenWidth, int screenHeight);
 void update_asteroid(Asteroid *a, float dt);
 void draw_asteroid(const Asteroid *a);
+void split_asteroid(Asteroid asteroids[], int max, int destroyedIdx);
+int asteroid_points(float scale);
 
 #endif

@@ -32,6 +32,13 @@ void init_asteroid(Asteroid *a, Vector2 position) {
   }
 };
 
+void init_asteroids(Asteroid *asteroids, int max, int screenWidth, int screenHeight) {
+  for (int i = 0; i < max; i++) {
+    init_asteroid(&asteroids[i],
+                  (Vector2){rand() % screenWidth, rand() % screenHeight});
+  }
+}
+
 void update_asteroid(Asteroid *a, float dt) {
 
   if (!a->alive) {
@@ -73,4 +80,43 @@ void draw_asteroid(const Asteroid *a) {
 
     DrawLineV(p1, p2, RAYWHITE);
   }
+}
+
+void split_asteroid(Asteroid asteroids[], int max, int destroyedIdx) {
+  if (asteroids[destroyedIdx].scale <= 0.4f)
+    return;
+
+  int slot1 = -1, slot2 = -1;
+  for (int k = 0; k < max; k++) {
+    if (!asteroids[k].alive) {
+      if (slot1 == -1)
+        slot1 = k;
+      else if (slot2 == -1) {
+        slot2 = k;
+        break;
+      }
+    }
+  }
+
+  if (slot1 != -1) {
+    init_asteroid(&asteroids[slot1], asteroids[destroyedIdx].pos);
+    asteroids[slot1].scale = asteroids[destroyedIdx].scale * 0.5f;
+    asteroids[slot1].vel.x += (rand() % 100 - 50);
+    asteroids[slot1].vel.y += (rand() % 100 - 50);
+  }
+  if (slot2 != -1) {
+    init_asteroid(&asteroids[slot2], asteroids[destroyedIdx].pos);
+    asteroids[slot2].scale = asteroids[destroyedIdx].scale * 0.5f;
+    asteroids[slot2].vel.x -= (rand() % 100 - 50);
+    asteroids[slot2].vel.y -= (rand() % 100 - 50);
+  }
+}
+
+int asteroid_points(float scale) {
+  if (scale > 0.7f)
+    return 20;
+  else if (scale > 0.4f)
+    return 50;
+  else
+    return 100;
 }
